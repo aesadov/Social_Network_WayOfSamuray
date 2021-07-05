@@ -1,5 +1,3 @@
-import {rerenderEntireTree} from '../../render';
-
 export type MessageType = {
     id: number
     message: string
@@ -26,6 +24,10 @@ export type ProfilePageType = {
 export type RootStateType = {
     profilePage: ProfilePageType
     dialogsPage: dialogsPageType
+}
+
+let rerenderEntireTree = (state: RootStateType) => {
+    console.log('state changed')
 }
 
 let state: RootStateType = {
@@ -59,7 +61,7 @@ let state: RootStateType = {
     }
 }
 
-export let addPost = () => {
+export const addPost = () => {
     let newPost: PostType = {
         id: new Date().getTime(),
         message: state.profilePage.newPostText,
@@ -70,9 +72,13 @@ export let addPost = () => {
     rerenderEntireTree(state)
 }
 
-export let updateNewPostText = (newText: string) => {
+export const updateNewPostText = (newText: string) => {
     state.profilePage.newPostText = newText
     rerenderEntireTree(state)
+}
+
+export const subscribe = (observer: any) => {
+    rerenderEntireTree = observer
 }
 
 export default state;
