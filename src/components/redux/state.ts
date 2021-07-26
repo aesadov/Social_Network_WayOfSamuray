@@ -32,15 +32,7 @@ export type StoreType = {
     getState: () => RootStateType
     dispatch: (action: ActionsTypes) => void
 }
-type AddPostActionType = {
-    type: 'ADD-POST'
-}
-type UpdateNewPostTextActionType = {
-    type: 'UPDATE-NEW-POST-TEXT',
-    newText: string
-}
-
-export type ActionsTypes = AddPostActionType | UpdateNewPostTextActionType
+export type ActionsTypes = ReturnType<typeof addPostActionCreator> | ReturnType<typeof updateNewPostTextActionCreator>
 
 const store: StoreType = {
     _state: {
@@ -85,20 +77,27 @@ const store: StoreType = {
 
     dispatch(action) {
         if (action.type === 'ADD-POST') {
-    let newPost: PostType = {
-        id: new Date().getTime(),
-        message: this._state.profilePage.newPostText,
-        likesCount: 0
-    }
-    this._state.profilePage.posts.push(newPost)
-    this._state.profilePage.newPostText = ''
-    this._rerenderEntireTree()
+            let newPost: PostType = {
+                id: new Date().getTime(),
+                message: this._state.profilePage.newPostText,
+                likesCount: 0
+            }
+            this._state.profilePage.posts.push(newPost)
+            this._state.profilePage.newPostText = ''
+            this._rerenderEntireTree()
         } else if (action.type === 'UPDATE-NEW-POST-TEXT') {
-    this._state.profilePage.newPostText = action.newText
-    this._rerenderEntireTree()
+            this._state.profilePage.newPostText = action.newText
+            this._rerenderEntireTree()
         }
     }
-
 }
+
+export const addPostActionCreator = () => ( {type: 'ADD-POST'} as const)
+export const updateNewPostTextActionCreator = (newText: string) => (
+    {
+        type: 'UPDATE-NEW-POST-TEXT',
+        newText: newText
+    } as const
+)
 
 export default store;
