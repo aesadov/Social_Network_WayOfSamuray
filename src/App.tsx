@@ -30,7 +30,7 @@ const App: React.FC<AppPropsType> = (props) => {
                         dispatch={props.store.dispatch.bind(props.store)}
                         />}/>
                     <Route path="/dialogs" render={() => <Dialogs
-                        state={state}/>}/>
+                        store={props.store}/>}/>
                     <Route path="/settings" component={Settings}/>
                     <Route path="/news" component={News}/>
                     <Route path="/music" component={Music}/>
