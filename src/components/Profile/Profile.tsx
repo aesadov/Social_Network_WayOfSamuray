@@ -1,10 +1,10 @@
 import React from 'react';
 import MyPosts from './MyPosts/MyPosts';
 import ProfileInfo from './ProfileInfo/ProfileInfo';
-import {ActionsTypes, RootStateType, StoreType} from '../redux/state';
+import {ActionsTypes, RootStateType, IStoreType} from '../redux/store';
+import {AppStateType, StoreType} from '../redux/redux-store';
 type ProfilePropsType = {
-    store: StoreType
-    state: RootStateType
+    state: AppStateType
     dispatch: (action: ActionsTypes) => void
 }
 
@@ -16,7 +16,7 @@ const Profile = (props: ProfilePropsType) => {
             <MyPosts
                 newPostText={props.state.profilePage.newPostText}
                 posts={props.state.profilePage.posts}
-                dispatch={props.dispatch.bind(props.store)}
+                dispatch={props.dispatch}
                 />
         </div>
     )

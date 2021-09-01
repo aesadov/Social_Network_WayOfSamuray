@@ -8,11 +8,11 @@ import {BrowserRouter, Route} from 'react-router-dom';
 import Settings from './components/Settings/Settings';
 import News from './components/News/News';
 import Music from './components/Music/Music';
-import {ActionsTypes, StoreType} from './components/redux/state';
+import {DispatchType, StoreType} from './components/redux/redux-store';
 
 type AppPropsType = {
     store: StoreType,
-    dispatch: (action: ActionsTypes) => void
+    dispatch: DispatchType
 }
 
 
@@ -25,12 +25,12 @@ const App: React.FC<AppPropsType> = (props) => {
                 <Navbar/>
                 <div className="app-wrapper-content">
                     <Route path="/profile" render={() => <Profile
-                        store={props.store}
                         state={state}
                         dispatch={props.store.dispatch.bind(props.store)}
                         />}/>
                     <Route path="/dialogs" render={() => <Dialogs
-                        store={props.store}/>}/>
+                        state={state}
+                        dispatch={props.dispatch}/>}/>
                     <Route path="/settings" component={Settings}/>
                     <Route path="/news" component={News}/>
                     <Route path="/music" component={Music}/>

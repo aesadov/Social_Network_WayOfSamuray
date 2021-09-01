@@ -1,5 +1,5 @@
 import profileReducer, {addPostActionCreator, updateNewPostTextActionCreator} from './profile-reducer';
-import dialogeReducer, {sendMessageCreator, updateNewMessageBodyCreator} from './dialogs-reducer';
+import dialogsReducer, {sendMessageCreator, updateNewMessageBodyCreator} from './dialogs-reducer';
 export type MessageType = {
     id: number
     message: string
@@ -28,7 +28,7 @@ export type RootStateType = {
     profilePage: ProfilePageType
     dialogsPage: dialogsPageType
 }
-export type StoreType = {
+export type IStoreType = {
     _state: RootStateType,
     _rerenderEntireTree: () => void,
     subscribe: (observer: () => void) => void,
@@ -41,7 +41,7 @@ export type ActionsTypes =
     | ReturnType<typeof sendMessageCreator>
     | ReturnType<typeof updateNewMessageBodyCreator>
 
-const store: StoreType = {
+const store: IStoreType = {
     _state: {
         profilePage: {
             posts: [
@@ -52,7 +52,6 @@ const store: StoreType = {
 
         },
         dialogsPage: {
-
             dialogs: [
                 {id: 1, name: 'Dimych'},
                 {id: 2, name: 'Andrey'},
@@ -61,7 +60,6 @@ const store: StoreType = {
                 {id: 5, name: 'Victor'},
                 {id: 6, name: 'Valera'},
             ],
-
             messages: [
                 {id: 1, message: 'Hi'},
                 {id: 2, message: 'How is your IT-kamasutra'},
@@ -81,7 +79,7 @@ const store: StoreType = {
 
     dispatch(action) {
         this._state.profilePage = profileReducer(this._state.profilePage, action)
-        this._state.dialogsPage = dialogeReducer(this._state.dialogsPage, action)
+        this._state.dialogsPage = dialogsReducer(this._state.dialogsPage, action)
         this._rerenderEntireTree()
     }
 }
