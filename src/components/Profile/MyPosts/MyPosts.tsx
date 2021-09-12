@@ -1,13 +1,14 @@
 import React from 'react';
 import s from './MyPosts.module.css';
 import Post from './Post/Post';
-import {ActionsTypes, PostsType} from '../../redux/store';
-import {addPostActionCreator, updateNewPostTextActionCreator} from '../../redux/profile-reducer';
+import {PostsType} from '../../redux/store';
+
 
 type MyPostsPropsType = {
-    dispatch: (action: ActionsTypes) => void
+    updateNewPostText: (text: string) => void
     posts: PostsType
     newPostText: string
+    addPost: () => void
 }
 
 const MyPosts = (props: MyPostsPropsType) => {
@@ -15,14 +16,14 @@ const MyPosts = (props: MyPostsPropsType) => {
     let postsElements = props.posts.map(p => <Post message={p.message} likesCount={p.likesCount}/>)
     let newPostElement = React.createRef<HTMLTextAreaElement>()
 
-    let addPost = () => {
-        props.dispatch( addPostActionCreator() )
+    let onAddPost = () => {
+        props.addPost()
     }
 
     let onPostChange = () => {
         if (newPostElement.current) {
             let text = newPostElement.current.value
-            props.dispatch( updateNewPostTextActionCreator(text) )
+            props.updateNewPostText(text)
         }
     }
 
@@ -37,7 +38,7 @@ const MyPosts = (props: MyPostsPropsType) => {
                         value={props.newPostText}/>
                 </div>
                 <div>
-                    <button onClick={addPost}>Add post</button>
+                    <button onClick={onAddPost}>Add post</button>
                 </div>
             </div>
             <div className={s.posts}>
