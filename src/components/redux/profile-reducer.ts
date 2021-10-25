@@ -1,5 +1,3 @@
-import {ActionsTypes} from './store';
-
 const ADD_POST = 'ADD-POST'
 const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT'
 
@@ -8,6 +6,7 @@ export type PostType = {
     message: string
     likesCount: number
 }
+export type ActionsTypes = ReturnType<typeof addPostActionCreator> | ReturnType<typeof updateNewPostTextActionCreator>
 
 let initialState = {
     posts: [
@@ -22,20 +21,26 @@ type InitialStateType = typeof initialState
 const profileReducer = (state: InitialStateType = initialState, action: ActionsTypes): InitialStateType => {
     switch(action.type) {
 
-        case ADD_POST:
+        case ADD_POST: {
 
             let newPost: PostType = {
                 id: new Date().getTime(),
                 message: state.newPostText,
                 likesCount: 0
             }
-            state.posts.push(newPost)
-            state.newPostText = ''
-            return state
+            let stateCopy = {...state}
+            stateCopy.posts = [...state.posts]
+            stateCopy.posts.push(newPost)
+            stateCopy.newPostText = ''
+            return stateCopy
+        }
 
-        case UPDATE_NEW_POST_TEXT:
-            state.newPostText = action.newText
-            return state
+        case UPDATE_NEW_POST_TEXT: {
+            let stateCopy = {...state}
+            stateCopy.newPostText = action.newText
+            return stateCopy
+        }
+
         default: return state
     }
 }
