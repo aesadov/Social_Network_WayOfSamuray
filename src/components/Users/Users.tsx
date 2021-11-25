@@ -17,15 +17,17 @@ const Users = (props: UsersPropsType) => {
 
     let pagesCount = Math.ceil(props.totalUsersCount / props.pageSize)
     let pages = []
-    for (let i=1; i <= pagesCount; i++) {
+    for (let i = 1; i <= pagesCount; i++) {
         pages.push(i)
     }
 
-   return <div>
+    return <div>
         <div>
-            {pages.map( p => {
-                return <span className={ props.currentPage === p ? styles.selectedPage : '' }
-                             onClick={ () => {props.onPageChanged(p)} }
+            {pages.map(p => {
+                return <span className={props.currentPage === p ? styles.selectedPage : ''}
+                             onClick={() => {
+                                 props.onPageChanged(p)
+                             }}
                              key={p}>{p}</span>
             })
             }
