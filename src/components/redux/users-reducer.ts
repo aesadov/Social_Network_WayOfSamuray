@@ -29,7 +29,7 @@ let initialState = {
     users: [] as Array<UserType>,
     pageSize: 5,
     totalUsersCount: 19,
-    currentPage: 2,
+    currentPage: 1,
 }
 
 type InitialStateType = typeof initialState
