@@ -16,13 +16,14 @@ import {Preloader} from '../common/Preloader/Preloader';
 
 type UsersContainerPropsType = MapStateToPropsType & MapDispatchToPropsType
 
-type MapStateToPropsType = {
+type MapStateToPropsType = ReturnType<typeof mapStateToProps>
+/*{
     users: Array<UserType>,
     pageSize: number,
     totalUsersCount: number,
     currentPage: number,
     isFetching: boolean,
-}
+}*/
 
 type MapDispatchToPropsType = {
     follow: (userId: number) => void,
@@ -72,7 +73,7 @@ class UsersContainer extends React.Component <UsersContainerPropsType> {
     }
 }
 
-let mapStateToProps = (state: AppStateType): MapStateToPropsType => {
+let mapStateToProps = (state: AppStateType) => {
     return {
         users: state.usersPage.users,
         pageSize: state.usersPage.pageSize,
