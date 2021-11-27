@@ -15,11 +15,15 @@ const ProfileInfo = (props: ProfileInfoPropsType) => {
         <div>
             <div>
                 <img
-                    src="https://images.pexels.com/photos/248797/pexels-photo-248797.jpeg?auto=compress&cs=tinysrgb&h=350" alt={'beach'}/>
+                    src="https://images.pexels.com/photos/248797/pexels-photo-248797.jpeg?auto=compress&cs=tinysrgb&h=350"
+                    alt={'beach'}/>
             </div>
             <div className={s.descriptionBlock}>
                 <img src={props.profile.photos.large} alt=""/>
-                ava + description
+                <div>{props.profile.fullName}</div>
+                <div>{props.profile.aboutMe}</div>
+                <div>{props.profile.contacts.vk}</div>
+                <div>{props.profile.contacts.instagram}</div>
             </div>
         </div>
     )
