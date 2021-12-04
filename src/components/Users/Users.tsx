@@ -26,6 +26,7 @@ const Users = (props: UsersPropsType) => {
     return <div>
         <div>
             {pages.map(p => {
+                debugger
                 return <span className={props.currentPage === p ? styles.selectedPage : ''}
                              onClick={() => {
                                  props.onPageChanged(p)
@@ -59,7 +60,7 @@ const Users = (props: UsersPropsType) => {
                                     })
                             }}>Unfollow</button>
                             : <button onClick={() => {
-                                axios.post(`https://social-network.samuraijs.com/api/1.0/follow/${u.id}`,{}, {
+                                axios.post(`https://social-network.samuraijs.com/api/1.0/follow/${u.id}`, {}, {
                                     withCredentials: true,
                                     headers: {
                                         'API-KEY': '4d909fd2-6aac-4f46-941c-7a9200acd1bd'
