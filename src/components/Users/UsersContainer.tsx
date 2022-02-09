@@ -7,9 +7,11 @@ import {
     unfollow,
     UserType
 } from '../redux/users-reducer';
-import React from 'react';
+import React, {ComponentType} from 'react';
 import Users from './Users';
 import {Preloader} from '../common/Preloader/Preloader';
+import {compose} from 'redux';
+import {withAuthRedirect} from '../hoc/withAuthRedirect';
 
 type UsersContainerPropsType = MapStateToPropsType & MapDispatchToPropsType
 
@@ -82,5 +84,8 @@ type MapStateToPropsType = {
     followingInProgress: Array<number>,
 }
 
-export default connect<MapStateToPropsType, MapDispatchToPropsType, {}, AppStateType>(mapStateToProps, mapDispatchToProps)(UsersContainer)
-
+export default compose<ComponentType>(
+    connect<MapStateToPropsType, MapDispatchToPropsType, {}, AppStateType>(mapStateToProps, mapDispatchToProps),
+    withAuthRedirect
+)
+(UsersContainer)
