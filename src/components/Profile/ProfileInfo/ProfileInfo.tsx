@@ -2,6 +2,7 @@ import React from 'react';
 import s from './ProfileInfo.module.css';
 import {Preloader} from '../../common/Preloader/Preloader';
 import {ProfileInfoType} from '../../redux/profile-reducer';
+import ProfileStatus from './ProfileStatus'
 
 type ProfileInfoPropsType = {
     profile: null | ProfileInfoType
@@ -13,13 +14,14 @@ const ProfileInfo = (props: ProfileInfoPropsType) => {
     }
     return (
         <div>
-            <div>
+            {/*<div>
                 <img
                     src="https://images.pexels.com/photos/248797/pexels-photo-248797.jpeg?auto=compress&cs=tinysrgb&h=350"
                     alt={'beach'}/>
-            </div>
+            </div>*/}
             <div className={s.descriptionBlock}>
                 <img src={props.profile.photos.large} alt=""/>
+                <ProfileStatus status={'hello'}/>
                 <div>{props.profile.fullName}</div>
                 <div>{props.profile.aboutMe}</div>
                 <div>{props.profile.contacts.vk}</div>
