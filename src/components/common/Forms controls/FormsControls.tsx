@@ -1,10 +1,11 @@
 import React from 'react';
 import styles from './FormsControls.module.css'
+import {WrappedFieldInputProps, WrappedFieldMetaProps} from 'redux-form';
 
 type FieldCreatorPropsType = {
-    input: string
-    meta: any
-    typeField: string
+    input: WrappedFieldInputProps
+    meta: WrappedFieldMetaProps
+    typeField: 'input' | 'textarea'
     props: any
 }
 
