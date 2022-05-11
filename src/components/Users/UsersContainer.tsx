@@ -27,15 +27,12 @@ type MapDispatchToPropsType = {
 class UsersContainer extends React.Component <UsersContainerPropsType> {
 
     componentDidMount() {
-
         this.props.getUsers(this.props.currentPage, this.props.pageSize)
-
     }
 
     onPageChanged = (pageNumber: number) => {
-
         this.props.getUsers(pageNumber, this.props.pageSize)
-
+        this.props.setCurrentPage(pageNumber)
     }
 
     render() {
@@ -65,7 +62,7 @@ let mapStateToProps = (state: AppStateType):MapStateToPropsType => {
         followingInProgress: state.usersPage.followingInProgress,
     }
 }
-let mapDispatchToProps = () => {
+/*let mapDispatchToProps = () => {
     return {
         follow,
         unfollow,
@@ -73,7 +70,7 @@ let mapDispatchToProps = () => {
         toggleFollowingProgress,
         getUsers
     }
-}
+}*/
 
 type MapStateToPropsType = {
     users: Array<UserType>
@@ -85,7 +82,13 @@ type MapStateToPropsType = {
 }
 
 export default compose<ComponentType>(
-    connect<MapStateToPropsType, MapDispatchToPropsType, {}, AppStateType>(mapStateToProps, mapDispatchToProps),
-    withAuthRedirect
+    connect<MapStateToPropsType, MapDispatchToPropsType, {}, AppStateType>(mapStateToProps, {
+        follow,
+        unfollow,
+        setCurrentPage,
+        toggleFollowingProgress,
+        getUsers
+    }),
+    withAuthRedirect,
 )
 (UsersContainer)
