@@ -26,7 +26,7 @@ export type UserType = {
     status: string
     location: LocationType
 }
-export type getUsersType = ReturnType<typeof getUsers>
+export type getUsersType = ReturnType<typeof requestUsers>
 
 export type ActionsTypes =
     ReturnType<typeof followSuccess>
@@ -99,10 +99,11 @@ export const toggleIsFetching = (isFetching: boolean) => ({type: TOGGLE_IS_FETCH
 export const toggleFollowingProgress = (isFetching: boolean, userId: number) => (
     {type: TOGGLE_IS_FOLLOWING_PROGRESS, isFetching, userId} as const
 )
-export const getUsers = (currentPage: number, pageSize: number): AppThunk => dispatch => {
-
+export const requestUsers = (page: number, pageSize: number): AppThunk => dispatch => {
     dispatch(toggleIsFetching(true))
-    usersAPI.getUsers(currentPage, pageSize).then(data => {
+    // dispatch(setCurrentPage(page)) - так фиксил Димыч (81 урок). Я зафиксил ранее по другому. Уже не помню как (работает и без этой строчки)
+
+    usersAPI.getUsers(page, pageSize).then(data => {
         dispatch(toggleIsFetching(false))
         dispatch(setUsers(data.items))
         dispatch(setTotalUsersCount(data.totalCount))
