@@ -16,7 +16,7 @@ type FormDataType = {
 }
 const maxlength10 = maxLengthCreator(10)
 
-const MyPosts = (props: MyPostsPropsType) => {
+const MyPosts = React.memo((props: MyPostsPropsType) => {
 
     let postsElements = props.posts.map(p => <Post message={p.message} likesCount={p.likesCount} key={p.id}/>)
 
@@ -35,7 +35,7 @@ const MyPosts = (props: MyPostsPropsType) => {
             </div>
         </div>
     )
-}
+})
 
 const AddNewPostForm: React.FC<InjectedFormProps<FormDataType>> = (props) => {
     return (
