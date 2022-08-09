@@ -4,6 +4,7 @@ import {profileAPI, usersAPI} from '../../api/api';
 const ADD_POST = 'ADD-POST'
 const SET_USERS_PROFILE = 'SET_USERS_PROFILE'
 const SET_STATUS = 'SET_STATUS'
+const DELETE_POST = 'DELETE_POST'
 
 export type PostType = {
     id: number
@@ -38,6 +39,7 @@ export type ActionsTypes =
     ReturnType<typeof addPostActionCreator>
     | ReturnType<typeof setUsersProfile>
     | ReturnType<typeof setStatus>
+    | ReturnType<typeof deletePost>
 
 let initialState = {
     posts: [
@@ -77,6 +79,11 @@ const profileReducer = (state: InitialStateType = initialState, action: ActionsT
                 ...state,
                 status: action.status
             }
+        case DELETE_POST:
+            return {
+                ...state,
+                posts: state.posts.filter(p => p.id != action.postId)
+            }
         default:
             return state
     }
@@ -85,6 +92,7 @@ const profileReducer = (state: InitialStateType = initialState, action: ActionsT
 export const addPostActionCreator = (newPostText: string) => ({type: ADD_POST, newPostText} as const)
 export const setUsersProfile = (profile: ProfileInfoType) => ({type: SET_USERS_PROFILE, profile} as const)
 export const setStatus = (status: string) => ({type: SET_STATUS, status} as const)
+export const deletePost = (postId: number) => ({type: DELETE_POST, postId} as const)
 export const getUsersProfile = (userId: string) => (dispatch: Dispatch<ActionsTypes>) => {
     usersAPI.getProfile(userId).then(response => {
         dispatch(setUsersProfile(response.data))
@@ -93,8 +101,8 @@ export const getUsersProfile = (userId: string) => (dispatch: Dispatch<ActionsTy
 export const getStatus = (userId: string) => (dispatch: Dispatch<ActionsTypes>) => {
     profileAPI.getStatus(userId)
         .then(response => {
-        dispatch(setStatus(response.data))
-    })
+            dispatch(setStatus(response.data))
+        })
 }
 export const updateStatus = (status: string) => (dispatch: Dispatch<ActionsTypes>) => {
     profileAPI.updateStatus(status)
