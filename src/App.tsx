@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 import Navbar from './components/Navbar/Navbar';
-import {BrowserRouter, Route} from 'react-router-dom';
+import {Route} from 'react-router-dom';
 import Settings from './components/Settings/Settings';
 import News from './components/News/News';
 import Music from './components/Music/Music';
@@ -33,7 +33,6 @@ class App extends React.Component<AppPropsType> {
             return <Preloader/>
         }
         return (
-            <BrowserRouter>
                 <div className="app-wrapper">
                     <HeaderContainer/>
                     <Navbar/>
@@ -47,7 +46,6 @@ class App extends React.Component<AppPropsType> {
                         <Route path="/music" component={Music}/>
                     </div>
                 </div>
-            </BrowserRouter>
         )
     }
 }

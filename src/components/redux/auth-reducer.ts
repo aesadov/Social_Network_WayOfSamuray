@@ -3,7 +3,7 @@ import {authAPI} from '../../api/api';
 import {AppThunk} from './redux-store';
 import {stopSubmit} from 'redux-form';
 
-const SET_USER_DATA = 'SET_USER_DATA'
+const SET_USER_DATA = 'samurai-network/auth/SET_USER_DATA'
 
 export type AuthActionsTypes = ReturnType<typeof setAuthUserData> | ReturnType<typeof stopSubmit>
 export type getAuthUserDataType = ReturnType<typeof getAuthUserData>
@@ -39,33 +39,28 @@ export const setAuthUserData = (id: string | null, email: string | null, login: 
     payload: {id, email, login, isAuth}
 } as const)
 
-export const getAuthUserData = () => (dispatch: Dispatch<AuthActionsTypes>) => {
-    return authAPI.me()
-        .then(response => {
-            if (response.data.resultCode === 0) {
-                let {id, login, email} = response.data.data
-                dispatch(setAuthUserData(id, email, login, true))
-            }
-        })
+export const getAuthUserData = () => async (dispatch: Dispatch<AuthActionsTypes>) => {
+    let response = await authAPI.me()
+    if (response.data.resultCode === 0) {
+        let {id, login, email} = response.data.data
+        dispatch(setAuthUserData(id, email, login, true))
+    }
 }
 
-export const login = (email: string, password: string, rememberMe: boolean = false): AppThunk => dispatch => {
-    authAPI.login(email, password, rememberMe)
-        .then(response => {
-            if (response.data.resultCode === 0) {
-                dispatch(getAuthUserData())
-            } else {
-                let message = response.data.messages.length > 0 ? response.data.messages[0] : 'Some error'
-                dispatch(stopSubmit('Login', {_error: message}))
-            }
-        })
+export const login = (email: string, password: string, rememberMe: boolean = false): AppThunk => async (dispatch) => {
+    let response = await authAPI.login(email, password, rememberMe)
+    if (response.data.resultCode === 0) {
+        dispatch(getAuthUserData())
+    } else {
+        let message = response.data.messages.length > 0 ? response.data.messages[0] : 'Some error'
+        dispatch(stopSubmit('Login', {_error: message}))
+    }
 }
-export const logout = () => (dispatch: Dispatch<AuthActionsTypes>) => {
-    authAPI.logout()
-        .then(response => {
+
+export const logout = () => async (dispatch: Dispatch<AuthActionsTypes>) => {
+    let response = await authAPI.logout()
             if (response.data.resultCode === 0) {
                 dispatch(setAuthUserData(null, null, null, false))
             }
-        })
 }
 export default authReducer
