@@ -5,7 +5,6 @@ type ProfileStatusPropsType = {
     updateStatus: (status: string) => void
 }
 
-
 class ProfileStatus extends React.Component<ProfileStatusPropsType> {
     state = {
         editeMode: false,
@@ -34,7 +33,6 @@ class ProfileStatus extends React.Component<ProfileStatusPropsType> {
                 status: this.props.status
             })
         }
-        console.log('componentDidUpdate')
     }
 
     render() {
