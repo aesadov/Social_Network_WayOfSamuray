@@ -1,13 +1,10 @@
-import React, { ComponentType} from 'react';
+import React, {ComponentType} from 'react';
 import './App.css';
 import Navbar from './components/Navbar/Navbar';
 import {BrowserRouter, Route, withRouter} from 'react-router-dom';
 import Settings from './components/Settings/Settings';
 import News from './components/News/News';
 import Music from './components/Music/Music';
-import DialogsContainer from './components/Dialogs/DialogsContainer';
-import UsersContainer from './components/Users/UsersContainer';
-import ProfileContainer from './components/Profile/ProfileContainer';
 import HeaderContainer from './components/Header/HeaderContainer';
 import LoginPage from './components/Login/Login';
 import {connect, Provider} from 'react-redux';
@@ -15,6 +12,10 @@ import {initializeApp} from './components/redux/app-reducer';
 import store, {AppStateType} from './components/redux/redux-store';
 import {Preloader} from './components/common/Preloader/Preloader';
 import {compose} from 'redux';
+import {withSuspense} from './components/hoc/withSuspense';
+const DialogsContainer = React.lazy(() => import ('./components/Dialogs/DialogsContainer'))
+const ProfileContainer = React.lazy(() => import ('./components/Profile/ProfileContainer'))
+const UsersContainer = React.lazy(() => import ('./components/Users/UsersContainer'))
 
 type MapDispatchToPropsType = {
     initializeApp: () => void,
@@ -38,9 +39,9 @@ class App extends React.Component<AppPropsType> {
                 <HeaderContainer/>
                 <Navbar/>
                 <div className="app-wrapper-content">
-                    <Route path="/profile/:userId?" render={() => <ProfileContainer/>}/>
-                    <Route path="/dialogs" render={() => <DialogsContainer/>}/>
-                    <Route path="/users" render={() => <UsersContainer/>}/>
+                    <Route path="/profile/:userId?" render={ withSuspense(ProfileContainer) }/>
+                    <Route path="/dialogs" render={ withSuspense(DialogsContainer) }/>
+                    <Route path="/users" render={ withSuspense(UsersContainer) }/>
                     <Route path="/login" render={() => <LoginPage/>}/>
                     <Route path="/settings" component={Settings}/>
                     <Route path="/news" component={News}/>
