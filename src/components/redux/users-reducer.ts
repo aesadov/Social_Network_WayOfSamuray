@@ -40,7 +40,7 @@ export type ActionsTypes =
 
 let initialState = {
     users: [] as Array<UserType>,
-    pageSize: 5,
+    pageSize: 10,
     totalUsersCount: 19,
     currentPage: 1,
     isFetching: true,
