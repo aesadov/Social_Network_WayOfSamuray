@@ -4,6 +4,8 @@ import MyPostsContainer from './MyPostsContainer';
 import {ProfileInfoType} from '../redux/profile-reducer';
 
 type ProfilePropsType = {
+    savePhoto: (file: File) => void
+    isOwner: boolean,
     profile: null | ProfileInfoType,
     status: string,
     updateStatus: (status: string) => void
@@ -13,7 +15,13 @@ const Profile = (props: ProfilePropsType) => {
     return (
 
         <div>
-            <ProfileInfo profile={props.profile} status={props.status} updateStatus={props.updateStatus}/>
+            <ProfileInfo
+                savePhoto={props.savePhoto}
+                isOwner={props.isOwner}
+                profile={props.profile}
+                status={props.status}
+                updateStatus={props.updateStatus}
+            />
             <MyPostsContainer/>
         </div>
     )

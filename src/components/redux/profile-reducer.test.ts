@@ -1,11 +1,11 @@
-import profileReducer, {addPostActionCreator, deletePost, PostType} from './profile-reducer';
+import profileReducer, {addPostActionCreator, deletePost, PostType, ProfileInfoType} from './profile-reducer';
 
 let state = {
     posts: [
-        {id: 1, message: 'Hi, how are you?', likesCount: 12},
-        {id: 2, message: 'It\'s my first post', likesCount: 15},
+        {id: 1, message: 'hi, how are you?', likesCount: 12},
+        {id: 2, message: 'it\'s my first post', likesCount: 15},
     ] as Array<PostType>,
-    profile: null,
+    profile: {} as ProfileInfoType,
     status: ''
 }
 
@@ -20,7 +20,7 @@ test('length of post should be incremented', () => {
     expect(newState.posts.length).toBe(3)
 });
 
-test('message of newPost should be correct', () => {
+test('message of newpost should be correct', () => {
     //1. test data
     let action = addPostActionCreator('it-kamasutra.com')
 
