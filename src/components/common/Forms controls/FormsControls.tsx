@@ -1,39 +1,46 @@
 import React from 'react';
 import styles from './FormsControls.module.css'
-import {Field, WrappedFieldInputProps, WrappedFieldMetaProps} from 'redux-form';
+import {Field, WrappedFieldMetaProps, WrappedFieldProps} from 'redux-form';
 
-type FieldCreatorPropsType = {
-    input: WrappedFieldInputProps
+
+type FormControlPropsType = {
     meta: WrappedFieldMetaProps
-    typeField: 'input' | 'textarea'
-    props: any
 }
 
-
-export const FieldCreator: React.FC<FieldCreatorPropsType> = ({input, meta: {touched, error}, ...props}) => {
+export const FormControl: React.FC<FormControlPropsType> = ({ meta: {touched, error}, children}) => {
 
     const hasError = touched && error
 
     return (
         <div className={styles.formControl + ' ' + (hasError ? styles.error : '')}>
             <div>
-                { props.typeField === 'input' && <input {...input} {...props}/> }
-                { props.typeField === 'textarea' && <textarea {...input} {...props}/> }
+                {children}
             </div>
             { hasError && <span>{error}</span> }
         </div>
     )
 }
+export const Textarea: React.FC<WrappedFieldProps> = (props) => {
+    const {input, meta, ...restProps} = props
+    return <FormControl {...props}><textarea {...input} {...restProps}/></FormControl>
+}
 
-export const createField = (placeholder: string | null, name: string, validators: any, component: any, props = {}, text = '') => (
+export const Input: React.FC<WrappedFieldProps> = (props) => {
+    const {input, meta, ...restProps} = props
+    return <FormControl {...props}><input {...input} {...restProps}/></FormControl>
+}
+export const createField = (placeholder: string | undefined,
+                            name: string,
+                            validators: any,
+                            component: React.FC<WrappedFieldProps>,
+                            props = {},
+                            text = '') => (
     <div>
         <Field placeholder={placeholder}
                name={name}
                validate={validators}
                component={component}
-
                {...props}
-               typeField='input'
         /> {text}
     </div>
 )

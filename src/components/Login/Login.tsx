@@ -1,6 +1,6 @@
 import React from 'react';
 import {InjectedFormProps, reduxForm} from 'redux-form';
-import {createField, FieldCreator} from '../common/Forms controls/FormsControls';
+import {createField, Input} from '../common/Forms controls/FormsControls';
 import {required} from '../../utils/validators/validators';
 import {connect} from 'react-redux';
 import {login} from '../redux/auth-reducer';
@@ -22,9 +22,9 @@ type MapStateToPropsType = {
 
 const LoginForm: React.FC<InjectedFormProps<FormDataType>> = ({handleSubmit, error}) => {
     return <form onSubmit={handleSubmit}>
-        {createField('Login', 'login', [required], FieldCreator)}
-        {createField('Password', 'password', [required], FieldCreator, {type: 'password'})}
-        {createField(null, 'rememberMe', [], FieldCreator, {type: 'checkbox'}, 'remember me')}
+        {createField('Login', 'login', [required], Input)}
+        {createField('Password', 'password', [required], Input, {type: 'password'})}
+        {createField(undefined, 'rememberMe', [], Input, {type: 'checkbox'}, 'remember me')}
         {error && <div className={style.formSummaryError}>{error}</div>}
         <div>
             <button>Login</button>

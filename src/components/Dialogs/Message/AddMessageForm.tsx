@@ -1,6 +1,6 @@
 import React from 'react';
 import {Field, InjectedFormProps, reduxForm} from 'redux-form';
-import {FieldCreator} from '../../common/Forms controls/FormsControls';
+import {FormControl} from '../../common/Forms controls/FormsControls';
 import {maxLengthCreator, required} from '../../../utils/validators/validators';
 
 export type FormDataType = {
@@ -12,7 +12,7 @@ const AddMessageForm: React.FC<InjectedFormProps<FormDataType>> = (props) => {
     return (
         <form onSubmit={props.handleSubmit}>
             <div>
-                <Field component={FieldCreator}
+                <Field component={FormControl}
                        validate={[required, maxlength50]}
                        name="newMessageBody"
                        placeholder="Enter your message"

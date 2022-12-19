@@ -1,4 +1,5 @@
 import axios from 'axios';
+import {ProfileDataFormType} from '../components/Profile/ProfileInfo/ProfileDataForm';
 
 const instance = axios.create({
     withCredentials: true,
@@ -23,14 +24,14 @@ export const usersAPI = {
     unfollow(userId: number) {
         return instance.delete(`follow/${userId}`)
     },
-    getProfile(userId: string) {
+    getProfile(userId: string | null) {
         console.warn('Obsolete method. Please use profileAPI object')
         return profileAPI.getProfile(userId)
     }
 }
 
 export const profileAPI = {
-    getProfile(userId: string) {
+    getProfile(userId: string | null) {
         return instance.get(`profile/` + userId)
     },
     getStatus(userId: string){
@@ -48,6 +49,9 @@ export const profileAPI = {
                 'Content-Type': 'multypart/form-data'
             }
         })
+    },
+    safeProfile(profile: ProfileDataFormType){
+        return instance.put(`profile`, profile)
     }
 }
 
