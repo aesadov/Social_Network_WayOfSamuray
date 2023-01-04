@@ -11,4 +11,5 @@
 
 .item a.activeLink {
     color: rgb(255, 125, 35);
+    font-weight: bold;
 }

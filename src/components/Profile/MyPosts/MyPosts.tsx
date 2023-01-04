@@ -47,7 +47,7 @@ const AddNewPostForm: React.FC<InjectedFormProps<FormDataType>> = (props) => {
                        validate={[required, maxlength10]}
                        typeField='textarea'/>
             </div>
-            <div>
+            <div className={s.addPost}>
                 <button>Add post</button>
             </div>
         </form>

@@ -1,6 +1,20 @@
 .paginator {
     margin: 10px;
 }
+
+.paginator button {
+    background-color: rgb(0, 128, 210);
+    color: white;
+    border-radius: 20px;
+    border: none;
+    cursor: pointer;
+    padding: 2px 10px;
+}
+
+.paginator span {
+    cursor: pointer;
+}
+
 .pageNumber {
     padding: 2px;
     border: 1px solid grey;

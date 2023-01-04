@@ -1,20 +1,10 @@
-.user {
-    margin: 20px;
-}
+.form {}
 
-.userPhoto {
-width: 100px;
-}
-
-.user button {
+.form button {
     background-color: rgb(0, 128, 210);
     color: white;
     border-radius: 20px;
     border: none;
     cursor: pointer;
     padding: 2px 10px;
-    /*height: 20px;
-    width: 60px;*/
 }
-
-

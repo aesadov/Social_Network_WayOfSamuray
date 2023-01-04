@@ -18,7 +18,7 @@ const User = ({
                   unfollow
               }: UserPropsType) => {
 
-    return <div>
+    return <div className={styles.user}>
                 <span>
                     <div>
                         <NavLink to={'/profile/' + user.id}>
@@ -47,7 +47,7 @@ const User = ({
                         <div>{'user.location.country'}</div>
                         <div>{'user.location.city'}</div>
                     </span>
-                </span>
+        </span>
     </div>
 }
 

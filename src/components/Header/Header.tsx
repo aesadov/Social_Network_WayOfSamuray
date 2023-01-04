@@ -7,7 +7,7 @@ type HeaderPropsType = HeaderContainerPropsType
 
 const Header = (props: HeaderPropsType) => {
     return <header className={s.header}>
-        <img src='https://cdn-icons-png.flaticon.com/512/3698/3698144.png' alt={'logo'}/>
+        <span className={s.span}>Social Network</span>
         <div className={s.loginBlock}>
             { props.isAuth
                 ? <div>{props.login} - <button onClick={props.logout}>Log out</button> </div>

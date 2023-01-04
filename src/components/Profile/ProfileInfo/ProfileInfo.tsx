@@ -46,7 +46,10 @@ const ProfileInfo: React.FC<ProfileInfoPropsType> = ({
                 {profile.photos &&
                     <img src={profile.photos.large || userPhoto} className={s.mainPhoto} alt=""/>
                 }
-                {isOwner && <input type={'file'} onChange={onMainPhotoSelected}/>}
+                {isOwner && <span className={s.inputFile}>
+                    <input type={'file'} id='input__file' onChange={onMainPhotoSelected}/>
+                    <label htmlFor='input__file' className='input__file-button'>Choose file</label>
+                </span>}
                 {editeMode
                     ? <ProfileDataReduxForm onSubmit={onSubmit} initialValues={profile} profile={profile}/>
                     : <ProfileData profile={profile} isOwner={isOwner} goToEditeMode={() => {
@@ -67,9 +70,9 @@ type ProfileDataPropsType = {
     goToEditeMode: () => void
 }
 const ProfileData: React.FC<ProfileDataPropsType> = ({profile, isOwner, goToEditeMode}) => {
-    return <div>
+    return <div className={s.profileData}>
         {isOwner && <div>
-            <button onClick={goToEditeMode}>edit</button>
+            <button onClick={goToEditeMode}>Edit</button>
         </div>}
         <div>
             <b>Full name:</b> {profile.fullName}

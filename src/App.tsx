@@ -1,7 +1,7 @@
 import React, {ComponentType} from 'react';
 import './App.css';
 import Navbar from './components/Navbar/Navbar';
-import {HashRouter, Route, withRouter} from 'react-router-dom';
+import {BrowserRouter, Redirect, Route, Switch, withRouter} from 'react-router-dom';
 import Settings from './components/Settings/Settings';
 import News from './components/News/News';
 import Music from './components/Music/Music';
@@ -13,6 +13,7 @@ import store, {AppStateType} from './components/redux/redux-store';
 import {Preloader} from './components/common/Preloader/Preloader';
 import {compose} from 'redux';
 import {withSuspense} from './components/hoc/withSuspense';
+
 const DialogsContainer = React.lazy(() => import ('./components/Dialogs/DialogsContainer'))
 const ProfileContainer = React.lazy(() => import ('./components/Profile/ProfileContainer'))
 const UsersContainer = React.lazy(() => import ('./components/Users/UsersContainer'))
@@ -26,8 +27,19 @@ type MapStateToPropsType = {
 export type AppPropsType = MapDispatchToPropsType & MapStateToPropsType
 
 class App extends React.Component<AppPropsType> {
+
+    catchAllUnhandledErrors = (promiseRejectionEvent: PromiseRejectionEvent) => {
+        alert('Some error occurred')
+        console.error(promiseRejectionEvent)
+    }
+
     componentDidMount() {
         this.props.initializeApp()
+        window.addEventListener('unhandledrejection', this.catchAllUnhandledErrors)
+    }
+
+    componentWillUnmount() {
+        window.removeEventListener('unhandledrejection', this.catchAllUnhandledErrors)
     }
 
     render() {
@@ -39,13 +51,19 @@ class App extends React.Component<AppPropsType> {
                 <HeaderContainer/>
                 <Navbar/>
                 <div className="app-wrapper-content">
-                    <Route path="/profile/:userId?" render={ withSuspense(ProfileContainer) }/>
-                    <Route path="/dialogs" render={ withSuspense(DialogsContainer) }/>
-                    <Route path="/users" render={ withSuspense(UsersContainer) }/>
-                    <Route path="/login" render={() => <LoginPage/>}/>
-                    <Route path="/settings" component={Settings}/>
-                    <Route path="/news" component={News}/>
-                    <Route path="/music" component={Music}/>
+
+                    <Switch>
+                        <Route exact path="/" render={() => <Redirect to={'/profile'}/>}/>
+                        <Route path="/Social_Network_WayOfSamuray" render={() => <Redirect to={'/'}/>}/>
+                        <Route path="/profile/:userId?" render={withSuspense(ProfileContainer)}/>
+                        <Route path="/dialogs" render={withSuspense(DialogsContainer)}/>
+                        <Route path="/users" render={withSuspense(UsersContainer)}/>
+                        <Route path="/login" render={() => <LoginPage/>}/>
+                        <Route path="/settings" component={Settings}/>
+                        <Route path="/news" component={News}/>
+                        <Route path="/music" component={Music}/>
+                        <Route path="*" render={() => <div>404 NOT FOUND</div>}/>
+                    </Switch>
                 </div>
             </div>
         )
@@ -61,12 +79,11 @@ let AppContainer = compose<ComponentType>(
     connect<MapStateToPropsType, MapDispatchToPropsType, {}, AppStateType>(mapStateToProps, {initializeApp}))(App)
 
 const SamuraiJSApp = () => {
-    return <HashRouter>
+    return <BrowserRouter>
         <Provider store={store}>
             <AppContainer/>
         </Provider>
-    </HashRouter>
+    </BrowserRouter>
 }
 
 export default SamuraiJSApp
-//export default connect(mapStateToProps, {initializeApp})(App);

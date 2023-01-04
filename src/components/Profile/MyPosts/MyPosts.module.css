@@ -5,3 +5,15 @@
 .posts {
     margin-top: 10px;
 }
+
+.addPost {}
+
+.addPost button {
+    background-color: rgb(0, 128, 210);
+    color: white;
+    border-radius: 20px;
+    border: none;
+    cursor: pointer;
+    height: 26px;
+    width: 80px;
+}
