@@ -35,16 +35,23 @@ type ProfileContainerPropsType = RouteComponentProps<PathParamsType> & MapStateT
 
 class ProfileContainer extends React.Component <ProfileContainerPropsType> {
 
+    getDataProfile(userId: string) {
+        this.props.getUsersProfile(userId)
+        this.props.getStatus(userId)
+    }
+
     refreshProfile() {
         let userId = this.props.match.params.userId
         if (!userId) {
             userId = this.props.authorizedUserId
             if (!userId) {
                 this.props.history.push('/login')
+            } else {
+                this.getDataProfile(userId)
             }
+        } else {
+            this.getDataProfile(userId)
         }
-        this.props.getUsersProfile(userId)
-        this.props.getStatus(userId)
     }
 
     componentDidMount() {
