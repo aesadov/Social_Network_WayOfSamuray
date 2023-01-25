@@ -7,6 +7,7 @@ import {login} from '../redux/auth-reducer';
 import {AppStateType} from '../redux/redux-store';
 import {Redirect} from 'react-router-dom';
 import style from './../common/Forms controls/FormsControls.module.css'
+import s from './Login.module.css'
 
 type FormDataType = {
     login: string
@@ -25,13 +26,17 @@ type LoginFormOwnPropsType = {
     captchaUrl: string | null
 }
 
-const LoginForm: React.FC<InjectedFormProps<FormDataType, LoginFormOwnPropsType> & LoginFormOwnPropsType> = ({handleSubmit, error, captchaUrl}) => {
+const LoginForm: React.FC<InjectedFormProps<FormDataType, LoginFormOwnPropsType> & LoginFormOwnPropsType> = ({
+                                                                                                                 handleSubmit,
+                                                                                                                 error,
+                                                                                                                 captchaUrl
+                                                                                                             }) => {
     return <form onSubmit={handleSubmit}>
         {createField('Login', 'login', [required], Input)}
         {createField('Password', 'password', [required], Input, {type: 'password'})}
         {createField(undefined, 'rememberMe', [], Input, {type: 'checkbox'}, 'remember me')}
 
-        {captchaUrl && <img src={captchaUrl} alt={'captcha image'}/> }
+        {captchaUrl && <img src={captchaUrl} alt={'captcha image'}/>}
         {captchaUrl && createField('symbols from image', 'captcha', [required], Input, {})}
 
         {error && <div className={style.formSummaryError}>{error}</div>}
@@ -50,9 +55,23 @@ const Login: React.FC<MapStateToPropsType & MapDispatchToPropsType> = (props) =>
     if (props.isAuth) {
         return <Redirect to={'/profile'}/>
     }
-    return <div>
-        <h1>Login</h1>
-        <LoginReduxForm onSubmit={onSubmit} captchaUrl={props.captchaUrl}/>
+    return <div className={s.loginPage}>
+        <span className={s.loginArea}>
+            <h1>Login</h1>
+            <LoginReduxForm onSubmit={onSubmit} captchaUrl={props.captchaUrl}/>
+        </span>
+        <span className={s.testAccountArea}>
+            <p>
+                To log in get registered <a href={'https://social-network.samuraijs.com/'} target={'_blank'}>here</a>
+            </p>
+            <p>
+                Or use common test account credentials: <br/>
+            </p>
+            <p>
+                <span className={s.testAcc}>Email:</span> free@samuraijs.com <br/>
+                <span className={s.testAcc}>Password:</span> free
+            </p>
+        </span>
     </div>
 }
 const mapStateToProps = (state: AppStateType) => ({
